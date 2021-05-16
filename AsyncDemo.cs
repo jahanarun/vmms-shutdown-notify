@@ -23,9 +23,8 @@ using System;
 using System.Collections;
 using System.Management;
 
-namespace Vmmshutfix
+namespace VmOrderedShutdown
 {
-
     public class AsyncDemo
     {
         public string ShutdownViaIC(string vmmachinename)

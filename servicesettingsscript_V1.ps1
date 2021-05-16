@@ -30,14 +30,14 @@ $value = get-ItemProperty -Path "hklm:SYSTEM\CurrentControlSet\Control" -Name Pr
 $Stringarray = $value.Preshutdownorder
 
 
-$newval = "vmmshutfix"
+$newval = "vmorderedshutdown"
 
 [boolean]$NewServiceexists = $true
 foreach ($item in $Stringarray){
 
 
 
-        if ($item -like "vmmshutfix")
+        if ($item -like "vmorderedshutdown")
         {
             $NewServiceexists = $false
             
@@ -60,21 +60,21 @@ $newarray
 
 
 
-$findvmmshutfix = get-service -name vmmshutfix -ErrorAction SilentlyContinue
+$findvmorderedshutdown = get-service -name vmorderedshutdown -ErrorAction SilentlyContinue
 
-If ($findvmmshutfix -like ""){
+If ($findvmorderedshutdown -like ""){
 
 
 
 }
 Else {
-stop-service -name vmmshutfix -Force
-Invoke-Expression -Command "sc.exe delete vmmshutfix"
+stop-service -name vmorderedshutdown -Force
+Invoke-Expression -Command "sc.exe delete vmorderedshutdown"
 
 
 }
 
-$despath = "C:\Program Files\vmmshutfix"
+$despath = "C:\Program Files\vmorderedshutdown"
 
 $foldercheck = Test-Path "$despath" -PathType Container
 
@@ -86,12 +86,12 @@ New-Item -Path $despath -ItemType Directory
 
 
 
-Copy-Item -Path ".\vmmshutfix.exe" -Destination "$despath" -force
-copy-item -path ".\vmmshutfix.exe.config"  -Destination "$despath" -force
-copy-item -path ".\vmmshutfix.pdb"  -Destination "$despath" -force
+Copy-Item -Path ".\vmorderedshutdown.exe" -Destination "$despath" -force
+copy-item -path ".\vmorderedshutdown.exe.config"  -Destination "$despath" -force
+copy-item -path ".\vmorderedshutdown.pdb"  -Destination "$despath" -force
 Copy-Item -Path ".\servicesettingsscript_v1.ps1" -Destination "$despath" -force
 
 $SCpath = $despath
 
 
-Invoke-Expression -Command 'sc.exe create vmmshutfix DisplayName="Virtual Machine PreShutdown Notification Service" binpath="C:\Program Files\vmmshutfix\vmmshutfix.exe" type=own start=auto'
+Invoke-Expression -Command 'sc.exe create vmorderedshutdown DisplayName="Virtual Machine PreShutdown Notification Service" binpath="C:\Program Files\vmorderedshutdown\vmorderedshutdown.exe" type=own start=auto'

@@ -26,11 +26,11 @@ using System.Management;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Threading;
-using static Vmmshutfix.AsyncDemo;
+using static VmOrderedShutdown.AsyncDemo;
 
-namespace Vmmshutfix
+namespace VmOrderedShutdown
 {
-    public class vmmshutfix : ServiceBase
+    public class VmOrderedShutdownService : ServiceBase
     {
         private const int SERVICEACCEPTPRESHUTDOWN = 0x100;
         private const int SERVICECONTROLPRESHUTDOWN = 0xf;
@@ -40,7 +40,7 @@ namespace Vmmshutfix
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        public vmmshutfix()
+        public VmOrderedShutdownService()
         {
             if (Environment.OSVersion.Version.Major >= 6)
             {
@@ -53,7 +53,7 @@ namespace Vmmshutfix
                 }
                 catch (Exception ex)
                 {
-                    EventLog.WriteEntry("vmmshutfix", ex.Message, EventLogEntryType.Error, 12100, short.MaxValue);
+                    EventLog.WriteEntry("vmorderedshutdown", ex.Message, EventLogEntryType.Error, 12100, short.MaxValue);
                 }
             }
             InitializeComponent();
@@ -63,11 +63,11 @@ namespace Vmmshutfix
         {
             try
             {
-                EventLog.WriteEntry("vmmshutfix", "vmmshutfix service starting", EventLogEntryType.Information, 12100, short.MaxValue);
+                EventLog.WriteEntry("vmorderedshutdown", "vmorderedshutdown service starting", EventLogEntryType.Information, 12100, short.MaxValue);
             }
             catch (Exception e)
             {
-                EventLog.WriteEntry("vmmshutfix", e.Message, EventLogEntryType.Error, 12100, short.MaxValue);
+                EventLog.WriteEntry("vmorderedshutdown", e.Message, EventLogEntryType.Error, 12100, short.MaxValue);
             }
         }
 
@@ -75,11 +75,11 @@ namespace Vmmshutfix
         {
             try
             {
-                EventLog.WriteEntry("vmmshutfix", "vmmshutfix service stopping", EventLogEntryType.Information, 12100, short.MaxValue);
+                EventLog.WriteEntry("vmorderedshutdown", "vmorderedshutdown service stopping", EventLogEntryType.Information, 12100, short.MaxValue);
             }
             catch (Exception e)
             {
-                EventLog.WriteEntry("vmmshutfix", e.Message, EventLogEntryType.Error, 12100, short.MaxValue);
+                EventLog.WriteEntry("vmorderedshutdown", e.Message, EventLogEntryType.Error, 12100, short.MaxValue);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Vmmshutfix
 
                         Thread.Sleep(5000);
                     }
-                    EventLog.WriteEntry("vmmshutfix", "StoppedVm's in preshutdown notification", EventLogEntryType.Information, 1210, short.MaxValue);
+                    EventLog.WriteEntry("vmorderedshutdown", "StoppedVm's in preshutdown notification", EventLogEntryType.Information, 1210, short.MaxValue);
                 }
                 else
                 {
@@ -146,7 +146,7 @@ namespace Vmmshutfix
             }
             catch (Exception e)
             {
-                EventLog.WriteEntry("vmmshutfix", e.Message, EventLogEntryType.Error, 12100, short.MaxValue);
+                EventLog.WriteEntry("vmorderedshutdown", e.Message, EventLogEntryType.Error, 12100, short.MaxValue);
             }
         }
 
@@ -245,7 +245,7 @@ namespace Vmmshutfix
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            this.ServiceName = "vmmshutfix";
+            this.ServiceName = "vmorderedshutdown";
         }
     }
 }
